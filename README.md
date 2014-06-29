@@ -1,4 +1,4 @@
-Faltacopete
+FALTACOPETE
 ===========
 
 Emprendimiento personal, primer sitio web de cupones descuentos en bebidas alchólicas de Chile.
