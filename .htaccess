@@ -1,0 +1,263 @@
+##
+# Contao Open Source CMS
+#
+# Copyright (c) 2005-2013 Leo Feyer
+#
+# @package Core
+# @link    https://contao.org
+# @license http://www.gnu.org/licenses/lgpl-3.0.html LGPL
+##
+
+##
+# Prevent access to the Contao template files
+##
+<FilesMatch "\.(tpl|html5|xhtml)$">
+  <IfModule !mod_authz_core.c>
+    Order deny,allow
+    Deny from all
+  </IfModule>
+  <IfModule mod_authz_core.c>
+    Require all denied
+  </IfModule>
+</FilesMatch>
+
+##
+# Allow access from all domains for webfonts
+# @see https://github.com/h5bp/html5-boilerplate
+##
+<IfModule mod_headers.c>
+  <FilesMatch "\.(ttf|ttc|otf|eot|woff|font.css)$">
+    Header set Access-Control-Allow-Origin "*"
+  </FilesMatch>
+</IfModule>
+
+##
+# Disable ETags
+# @see http://developer.yahoo.com/performance/rules.html#etags
+##
+FileETag None
+<IfModule mod_headers.c>
+  Header unset ETag
+</IfModule>
+
+##
+# Set the proper MIME types
+# @see https://github.com/h5bp/html5-boilerplate
+##
+<IfModule mod_mime.c>
+  AddType application/javascript              js jsonp
+  AddType application/json                    json
+  AddType audio/ogg                           oga ogg
+  AddType audio/mp4                           m4a f4a f4b
+  AddType video/ogg                           ogv
+  AddType video/mp4                           mp4 m4v f4v f4p
+  AddType video/webm                          webm
+  AddType video/x-flv                         flv
+  AddType image/svg+xml                       svg svgz
+  AddEncoding gzip                            svgz
+  AddType application/vnd.ms-fontobject       eot
+  AddType application/x-font-ttf              ttf ttc
+  AddType font/opentype                       otf
+  AddType application/x-font-woff             woff
+  AddType image/x-icon                        ico
+  AddType image/webp                          webp
+  AddType text/cache-manifest                 appcache manifest
+  AddType text/x-component                    htc
+  AddType application/xml                     rss atom xml rdf
+  AddType application/x-web-app-manifest+json webapp
+  AddType text/x-vcard                        vcf
+  AddType application/x-shockwave-flash       swf
+</IfModule>
+
+##
+# Gzip compression
+# @see https://github.com/h5bp/html5-boilerplate
+##
+<IfModule mod_deflate.c>
+  <IfModule mod_filter.c>
+    AddOutputFilterByType DEFLATE text/html text/plain text/css application/json
+    AddOutputFilterByType DEFLATE application/javascript
+    AddOutputFilterByType DEFLATE text/xml application/xml text/x-component
+    AddOutputFilterByType DEFLATE application/xhtml+xml application/rss+xml application/atom+xml
+    AddOutputFilterByType DEFLATE image/x-icon image/svg+xml application/vnd.ms-fontobject application/x-font-ttf font/opentype
+  </IfModule>
+</IfModule>
+
+##
+# Expires headers (for better cache control)
+# @see https://github.com/h5bp/html5-boilerplate
+##
+<IfModule mod_expires.c>
+  ExpiresActive on
+
+  ##
+  # Productional website
+  ##
+  ExpiresByType text/cache-manifest           "access plus 0 seconds"
+  ExpiresByType text/html                     "access plus 0 seconds"
+  ExpiresByType text/xml                      "access plus 0 seconds"
+  ExpiresByType application/xml               "access plus 0 seconds"
+  ExpiresByType application/json              "access plus 0 seconds"
+  ExpiresByType application/rss+xml           "access plus 1 seconds"
+  ExpiresByType application/atom+xml          "access plus 1 seconds"
+  ExpiresByType image/gif                     "access plus 1 hour"
+  ExpiresByType image/png                     "access plus 1 hour"
+  ExpiresByType image/jpeg                    "access plus 1 hour"
+  ExpiresByType image/x-icon                  "access plus 1 hour"
+  ExpiresByType video/ogg                     "access plus 1 month"
+  ExpiresByType audio/ogg                     "access plus 1 month"
+  ExpiresByType video/mp4                     "access plus 1 month"
+  ExpiresByType video/webm                    "access plus 1 month"
+  ExpiresByType text/x-component              "access plus 1 hour"
+  ExpiresByType application/x-font-ttf        "access plus 1 month"
+  ExpiresByType font/opentype                 "access plus 1 month"
+  ExpiresByType application/x-font-woff       "access plus 1 month"
+  ExpiresByType image/svg+xml                 "access plus 1 month"
+  ExpiresByType application/vnd.ms-fontobject "access plus 1 month"
+  ExpiresByType text/css                      "access plus 0 seconds"
+  ExpiresByType application/javascript        "access plus 0 seconds"
+
+  ##
+  # Disable caching during development
+  # @see https://github.com/contao/core/issues/4364
+  ##
+  #ExpiresByType text/cache-manifest           "access"
+  #ExpiresByType text/html                     "access"
+  #ExpiresByType text/xml                      "access"
+  #ExpiresByType application/xml               "access"
+  #ExpiresByType application/json              "access"
+  #ExpiresByType application/rss+xml           "access"
+  #ExpiresByType application/atom+xml          "access"
+  #ExpiresByType image/gif                     "access"
+  #ExpiresByType image/png                     "access"
+  #ExpiresByType image/jpeg                    "access"
+  #ExpiresByType image/x-icon                  "access"
+  #ExpiresByType video/ogg                     "access"
+  #ExpiresByType audio/ogg                     "access"
+  #ExpiresByType video/mp4                     "access"
+  #ExpiresByType video/webm                    "access"
+  #ExpiresByType text/x-component              "access"
+  #ExpiresByType application/x-font-ttf        "access"
+  #ExpiresByType font/opentype                 "access"
+  #ExpiresByType application/x-font-woff       "access"
+  #ExpiresByType image/svg+xml                 "access"
+  #ExpiresByType application/vnd.ms-fontobject "access"
+  #ExpiresByType text/css                      "access"
+  #ExpiresByType application/javascript        "access"
+
+</IfModule>
+
+##
+# Header adjustments
+##
+<IfModule mod_headers.c>
+
+  ##
+  # Disable caching during development
+  # @see https://github.com/contao/core/issues/4364
+  ##
+  #Header unset Cache-Control
+  #Header append Cache-Control must-revalidate
+
+  ##
+  # Do not cache the cron.txt file
+  # @see https://github.com/contao/core/issues/5105
+  ##
+  <FilesMatch "cron\.txt$">
+    Header set Cache-Control "no-cache, no-store, must-revalidate, max-age=0, proxy-revalidate, no-transform"
+  </FilesMatch>
+
+  ##
+  # Add a Vary Accept-Encoding header for the compressed resources. If you
+  # modify the file types above, make sure to change them here accordingly.
+  # @see http://developer.yahoo.com/performance/rules.html#gzip
+  #
+  # Note: If you are using a case-sensitive file system like HFS+ or ext4, you
+  # have to change the <FilesMatch> directive as follows:
+  #
+  # <FilesMatch "\.(?i:js|css|xml|gz)$">
+  #
+  # For more information see: https://github.com/contao/core/issues/4364
+  ##
+  <FilesMatch "\.(js|css|xml|gz)$">
+    Header append Vary Accept-Encoding
+  </FilesMatch>
+
+</IfModule>
+
+##
+# Disable MultiViews if you are having issues with requests returning the wrong
+# page. Requires AllowOverride Options=All,MultiViews to be set here.
+# @see https://github.com/contao/core/issues/3521
+##
+#Options -MultiViews
+
+##
+# URL rewriting
+##
+ <FilesMatch "\.(htm|php|js|css|htc|png|gif|jpe?g|ico|xml|csv|txt|swf|flv|mp4|webm|ogv|mp3|ogg|oga|eot|woff|svg|ttf|pdf|gz)$">
+    RewriteEngine Off
+  </FilesMatch>
+
+<IfModule mod_rewrite.c>
+  Options +FollowSymlinks
+  RewriteEngine On
+  RewriteCond %{HTTP_HOST} ^faltacopete.cl
+  RewriteRule ^ http://www.faltacopete.cl%{REQUEST_URI} [L,R=301]
+</IfModule>
+<Files ~ ".ini">
+      Order allow,deny
+      Deny from all
+      Satisfy All
+</Files>
+<IfModule mod_rewrite.c>
+ # RewriteBase /nowsup
+ # RewriteCond %{REQUEST_FILENAME} !-f 
+ # RewriteCond %{REQUEST_FILENAME} !-d
+
+ # RewriteRule (.*)images/(.*)$ images/$2 [L]
+ # RewriteRule (.*)highslide/(.*)$ highslide/$2 [L]
+ # RewriteRule (.*)css/(.*)$ css/$2 [L]
+ # RewriteRule (.*)js/(.*)$ js/$2 [L]
+
+ # RewriteRule ^([a-z0-9_-]+)/?$ /nowsup/index.php?place=$1 [NC,L]
+
+ # RewriteRule ^(![\w.\-_]+)/?$ /nowsup/index.php?place=userprofile&id=$1 [NC,L]
+  
+ # RewriteRule ^editar-user/(![\w.\-_]+)/?$ /nowsup/index.php?place=editar-usuario&id=$1 [NC,L]
+  
+ # RewriteRule ^break/([\w.\-_]+)/([a-z0-9_-]+)?$ /nowsup/index.php?place=eventprofile&id=$1&evento-msj=$2 [NC,L]
+ 
+ # RewriteRule ^publicar/([a-z0-9_-]+)?$ /nowsup/index.php?place=publicar&id=$1&evento-msj=$1 [NC,L]
+
+ # RewriteRule ^break/([\w.\-_]+)/?$ /nowsup/index.php?place=eventprofile&id=$1 [NC,L]
+
+ # RewriteRule ^productora/([a-z0-9_-]+)/?$ /nowsup/index.php?place=productora&id=$1 [NC,L]
+
+ # RewriteRule ^editar-evento/([a-z0-9_-]+)/?$ /nowsup/index.php?place=editar-evento&id=$1 [NC,L]
+ 
+ # RewriteRule ^cerca/([a-z0-9_-]+)/?$ /nowsup/index.php?place=cerca&tran-msj=$1 [NC,L]
+
+ 
+
+   RewriteBase /
+   RewriteCond %{REQUEST_FILENAME} !-f 
+   RewriteCond %{REQUEST_FILENAME} !-d
+
+   RewriteRule (.*)images/(.*)$ images/$2 [L]
+   RewriteRule (.*)highslide/(.*)$ highslide/$2 [L]
+   RewriteRule (.*)css/(.*)$ css/$2 [L]
+   RewriteRule (.*)js/(.*)$ js/$2 [L]
+   RewriteRule (.*)function/(.*)$ function/$2 [L]
+   RewriteRule (.*)llamke/(.*)$ llamke/$2 [L]
+   RewriteRule (.*)llamke/(.*)$ llamkellamke.cl/$2 [L] 
+
+   RewriteRule ^([a-z0-9_-]+)/?$ /index.php?place=$1 [NC,L]
+   RewriteRule ^cupon/([a-z0-9_-]+)/?$ /index.php?place=cupon&id=$1 [NC,L]
+   RewriteRule ^generar-cupon/([0-9_-]+)/?$ /index.php?place=generar-cupon&id=$1 [NC,L]
+   RewriteRule ^editar-oferta/([0-9_-]+)/?$ /index.php?place=editar-oferta&id=$1 [NC,L]
+   RewriteRule ^editar-informacion/([0-9_-]+)/?$ /index.php?place=editar-informacion&id=$1 [NC,L]
+   RewriteRule ^home/([\w.\-_=]+)/?$ /index.php?place=home&q=$1 [NC,L]
+   RewriteRule ^home/([\w.\-_=]+)/([0-9_-]+)/?$ /index.php?place=home&q=$1&sector=$2 [NC,L]
+</IfModule>
+
