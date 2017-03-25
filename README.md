@@ -1,4 +1,4 @@
-FALTACOPETE
+faltacopete
 ===========
 
 Personal Entrepreneurship, the first website for discount coupons on Chilean alcoholic drinks.
