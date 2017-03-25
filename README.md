@@ -1,7 +1,8 @@
 FALTACOPETE
 ===========
 
-Emprendimiento personal, primer sitio web de cupones descuentos en bebidas alchólicas de Chile.
+Personal Entrepreneurship, the first website for discount coupons on Chilean alcoholic drinks.
 
-En cuanto a lo técnico, está desarrollado con tecnologías PHP, JQUERY, AJAX y MYSQL y posee la capacidad de ser RESPONSIVO,
-para la buena visualización en dispositivos móviles.
+This responsive web site, was develop with PHP, Css, JQuery, Ajax y MySql.
+
+The programing architecture is not the better, but, was my first entrepreneurship, then i have to put it here.
